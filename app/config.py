@@ -44,3 +44,10 @@ class TestConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SCHEDULER_ENABLED = False
+
+
+class CliConfig(Config):
+    """Used by report_status.py: a one-shot script has no business starting
+    a background reminder scheduler that will just die when it exits."""
+
+    SCHEDULER_ENABLED = False

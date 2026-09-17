@@ -9,6 +9,7 @@ import argparse
 import sys
 
 from app import create_app
+from app.config import CliConfig
 from app.emailer import send_equipment_restored_email, send_part_order_email
 from app.models import Equipment, db
 from app.scheduler import _format_duration
@@ -39,7 +40,7 @@ def main():
         p.add_argument("--note")
 
     args = parser.parse_args()
-    app = create_app()
+    app = create_app(CliConfig)
 
     with app.app_context():
         if args.command == "list":
