@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+  <p>{{ down_count }} of {{ equipment|length }} down.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Equipment</th>
+        <th>Status</th>
+        <th>Part</th>
+        <th>Vendor</th>
+        <th>Down for</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in equipment %}
+        <tr class="{{ 'down' if item.is_down else '' }}">
+          <td>
+            <a href="{{ url_for('main.edit_equipment', equipment_id=item.id) }}">{{ item.name }}</a>
+            {% if item.location %}<br><small>{{ item.location }}</small>{% endif %}
+          </td>
+          <td><span class="badge {{ item.status }}">{{ item.status }}</span></td>
+          <td>{{ item.part_name or '-' }}</td>
+          <td>{{ item.vendor_name or '-' }}</td>
+          <td>{{ durations.get(item.id, '-') }}</td>
+          <td class="actions">
+            {% if item.is_down %}
+              <form class="inline" method="post" action="{{ url_for('main.mark_up', equipment_id=item.id) }}">
+                <button type="submit">Mark up</button>
+              </form>
+            {% else %}
+              <form class="inline" method="post" action="{{ url_for('main.mark_down', equipment_id=item.id) }}">
+                <button type="submit">Mark down</button>
+              </form>
+            {% endif %}
+            <form class="inline" method="post" action="{{ url_for('main.delete_equipment', equipment_id=item.id) }}"
+                  onsubmit="return confirm('Delete {{ item.name }}?');">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6">No equipment yet. <a href="{{ url_for('main.new_equipment') }}">Add some</a>.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

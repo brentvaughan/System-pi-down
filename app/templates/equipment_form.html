@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ 'Edit' if equipment else 'Add' }} equipment</h2>
+  <form method="post">
+    <label>Name</label>
+    <input name="name" required value="{{ equipment.name if equipment else '' }}">
+
+    <label>Location</label>
+    <input name="location" value="{{ equipment.location if equipment else '' }}">
+
+    <label>Part name (ordered when this goes down)</label>
+    <input name="part_name" value="{{ equipment.part_name if equipment else '' }}">
+
+    <label>Part number</label>
+    <input name="part_number" value="{{ equipment.part_number if equipment else '' }}">
+
+    <label>Vendor name</label>
+    <input name="vendor_name" value="{{ equipment.vendor_name if equipment else '' }}">
+
+    <label>Vendor email (gets the part-order email when marked down)</label>
+    <input name="vendor_email" type="email" value="{{ equipment.vendor_email if equipment else '' }}">
+
+    <label>Notes</label>
+    <textarea name="notes" rows="3">{{ equipment.notes if equipment else '' }}</textarea>
+
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

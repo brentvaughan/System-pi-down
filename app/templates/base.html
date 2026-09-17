@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Equipment Downtime Tracker{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+    h1 { margin-bottom: 0.25rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #ddd; }
+    tr.down { background: #fdecea; }
+    .badge { padding: 0.15rem 0.5rem; border-radius: 0.75rem; font-size: 0.8rem; font-weight: 600; }
+    .badge.up { background: #e3f7e6; color: #17792a; }
+    .badge.down { background: #fbdcd8; color: #a3231a; }
+    .flash { padding: 0.5rem 0.75rem; border-radius: 0.25rem; margin: 0.25rem 0; }
+    .flash.success { background: #e3f7e6; }
+    .flash.warning { background: #fff4d6; }
+    form.inline { display: inline; }
+    input, textarea { width: 100%; padding: 0.4rem; margin-bottom: 0.75rem; box-sizing: border-box; }
+    label { font-weight: 600; font-size: 0.9rem; }
+    .actions button { margin-right: 0.25rem; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <h1>Equipment Downtime Tracker</h1>
+    <a href="{{ url_for('main.new_equipment') }}">+ Add equipment</a>
+  </div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</body>
+</html>
